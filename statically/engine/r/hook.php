@@ -2,42 +2,81 @@
 
 function content($content) {
     extract($GLOBALS, \EXTR_SKIP);
-    if (!empty($state->x->statically->optimize->{'script/style'})) {
-        if (false !== \strpos($content, '<link ')) {
-            // TODO
+    // Resolve relative URL and convert it to CDN
+    $resolve = function($path, $key, $q = "") use($url) {
+        // Skip inline data
+        if (0 === \strpos($path, 'data:')) {
+            return $path;
         }
-        if (false !== \strpos($content, '<script ')) {
-            // TODO
+        if (0 === \strpos($path, '//')) {
+            return 'https://cdn.statically.io/' . $key . \substr($path, -2) . $q;
         }
+        if (0 === \strpos($path, '/')) {
+            return 'https://cdn.statically.io/' . $key . \explode('://', $url . $path, 2)[1] . $q;
+        }
+        return 'https://cdn.statically.io/' . $key . \explode('://', $path, 2)[1] . $q;
+    };
+    if (false !== \strpos($content, '<link ') && !empty($state->x->statically->f->style)) {
+        $content = \preg_replace_callback('/<link(\s[^>]*)?>/', function($m) use($resolve) {
+            // Skip link(s) without `href` and `rel` attribute
+            if (false === \strpos($m[0], 'href=') || false === \strpos($m[0], 'rel=')) {
+                return $m[0];
+            }
+            $link = new \HTML($m[0]);
+            // Make sure it is a style sheet
+            if ('stylesheet' !== $link['rel']) {
+                return $m[0];
+            }
+            // Skip link(s) without `href` attribute
+            if (!$href = $link['href']) {
+                return $m[0];
+            }
+            // Make sure it ends with `.css`
+            if ('.css' !== \substr($href, -4)) {
+                return $m[0];
+            }
+            $link['href'] = $resolve($href, 'css');
+            return $link;
+        }, $content);
     }
-    if (false !== \strpos($content, '<img ') && !empty($state->x->statically->optimize->image)) {
-        $content = \preg_replace_callback('/<img(\s[^>]*)?>/', function($m) use($state) {
-            $img = new \HTML($m[0]);
-            $u = $img['src'] ?? null;
+    if (false !== \strpos($content, '<script ') && !empty($state->x->statically->f->script)) {
+        $content = \preg_replace_callback('/<script(\s[^>]*)?>/', function($m) use($resolve) {
+            // Skip script(s) without `src` attribute
+            if (false === \strpos($m[0], 'src=')) {
+                return $m[0];
+            }
+            $script = new \HTML($m[0]);
+            // Skip script(s) without `src` attribute
+            if (!$src = $script['src']) {
+                return $m[0];
+            }
+            // Make sure it ends with `.js`
+            if ('.js' !== \substr($src, -3)) {
+                return $m[0];
+            }
+            $script['src'] = $resolve($src, 'js');
+            return $script;
+        }, $content);
+    }
+    if (false !== \strpos($content, '<img ') && !empty($state->x->statically->f->image)) {
+        $content = \preg_replace_callback('/<img(\s[^>]*)?>/', function($m) use($resolve, $state) {
             // Skip image(s) without `src` attribute
-            if (!$u) {
+            if (false === \strpos($m[1], 'src=')) {
+                return $m[0];
+            }
+            $img = new \HTML($m[0]);
+            // Skip image(s) without `src` attribute
+            if (!$src = $img['src']) {
                 return $m[0];
             }
             // Remove query string URL
-            $u = \explode('?', $u, 2)[0];
+            $src = \explode('?', $src, 2)[0];
             // Skip unsupported image file type
-            if (false === \strpos(',gif,jpeg,jpg,png,', ',' . \pathinfo($u, \PATHINFO_EXTENSION) . ',')) {
+            if (false === \strpos(',gif,jpeg,jpg,png,', ',' . \pathinfo($src, \PATHINFO_EXTENSION) . ',')) {
                 return $m[0];
             }
-            // Skip inline image(s) data
-            if (0 === \strpos($u, 'data:')) {
-                return $m[0];
-            }
-            // Resolve relative URL
-            if (0 === \strpos($u, '//')) {
-                $u = 'https://cdn.statically.io/img/' . \substr($u, 2);
-            } else if (0 === \strpos($u, '/')) {
-                $u = 'https://cdn.statically.io/img/' . \explode('://', \URL::long(\ltrim($u, '/')), 2)[1];
-            } else {
-                $u = 'https://cdn.statically.io/img/' . \explode('://', $u, 2)[1];
-            }
-            $q = $state->x->statically->{'optimize-image'}->quality ?? 0;
-            $img['src'] = $u . '?f=auto' . ($q ? '&q=' . $q : "");
+            $q = (int) ($state->x->statically->image->quality ?? 0);
+            $img['src'] = $resolve($src, 'img', '?f=auto' . ($q ? '&q=' . $q : ""));
             return $img;
         }, $content);
     }

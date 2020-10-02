@@ -74,26 +74,31 @@ function statically($_) {
                 'fields' => [
                     'type' => 'fields',
                     'lot' => [
-                        'optimize' => [
-                            'name' => 'state[optimize]',
-                            'value' => $data['optimize'] ?? [],
+                        'f' => [
+                            'name' => 'state[f]',
+                            'value' => $data['f'] ?? [],
+                            'title' => 'Features',
                             'type' => 'items',
                             'block' => true,
                             'lot' => [
-                                'script/style' => [
-                                    'title' => 'Minify CSS and JavaScript files automatically.',
-                                    'value' => 1
-                                ],
                                 'image' => [
                                     'title' => 'Optimize image files automatically.',
+                                    'value' => 1
+                                ],
+                                'script' => [
+                                    'title' => 'Minify CSS files automatically.',
+                                    'value' => 1
+                                ],
+                                'style' => [
+                                    'title' => 'Minify JS files automatically.',
                                     'value' => 1
                                 ]
                             ],
                             'stack' => 10
                         ],
-                        'optimize-image-quality' => [
-                            'name' => 'state[optimize-image][quality]',
-                            'value' => $data['optimize-image']['quality'] ?? null,
+                        'image' => [
+                            'name' => 'state[image][quality]',
+                            'value' => $data['image']['quality'] ?? null,
                             'title' => 'Image Quality',
                             'description' => 'Set the compression rate for all images. Enter <code>0</code> or leave empty to disable.',
                             'after' => '%',
