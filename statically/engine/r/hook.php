@@ -9,7 +9,7 @@ function content($content) {
             return $path;
         }
         if (0 === \strpos($path, '//')) {
-            return 'https://cdn.statically.io/' . $key . \substr($path, -2) . $q;
+            return 'https://cdn.statically.io/' . $key . \substr($path, 2) . $q;
         }
         if (0 === \strpos($path, '/')) {
             return 'https://cdn.statically.io/' . $key . \explode('://', $url . $path, 2)[1] . $q;
