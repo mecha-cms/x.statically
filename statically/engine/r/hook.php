@@ -1,6 +1,10 @@
 <?php namespace _\lot\x\statically;
 
 function content($content) {
+    // Ignore local site
+    if (\has(['::1', '127.0.0.1'], \Client::IP())) {
+        return $content;
+    }
     extract($GLOBALS, \EXTR_SKIP);
     // Resolve relative URL and convert it to CDN
     $resolve = function($path, $key, $q = "") use($url) {
@@ -9,12 +13,12 @@ function content($content) {
             return $path;
         }
         if (0 === \strpos($path, '//')) {
-            return 'https://cdn.statically.io/' . $key . \substr($path, 2) . $q;
+            return 'https://cdn.statically.io/' . $key . '/' . \substr($path, 2) . $q;
         }
         if (0 === \strpos($path, '/')) {
-            return 'https://cdn.statically.io/' . $key . \explode('://', $url . $path, 2)[1] . $q;
+            return 'https://cdn.statically.io/' . $key . '/' . \explode('://', $url . $path, 2)[1] . $q;
         }
-        return 'https://cdn.statically.io/' . $key . \explode('://', $path, 2)[1] . $q;
+        return 'https://cdn.statically.io/' . $key . '/' . \explode('://', $path, 2)[1] . $q;
     };
     if (false !== \strpos($content, '<link ') && !empty($state->x->statically->f->style)) {
         $content = \preg_replace_callback('/<link(\s[^>]*)?>/', function($m) use($resolve) {
@@ -72,7 +76,7 @@ function content($content) {
             // Remove query string URL
             $src = \explode('?', $src, 2)[0];
             // Skip unsupported image file type
-            if (false === \strpos(',gif,jpeg,jpg,png,', ',' . \pathinfo($src, \PATHINFO_EXTENSION) . ',')) {
+            if (false === \strpos(',gif,jpeg,jpg,png,svg,', ',' . \pathinfo($src, \PATHINFO_EXTENSION) . ',')) {
                 return $m[0];
             }
             $q = (int) ($state->x->statically->image->quality ?? 0);
