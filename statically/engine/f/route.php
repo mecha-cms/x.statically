@@ -12,14 +12,16 @@ function statically($_) {
         }
     }
     $_['layout'] = 'state';
-    // This field was added to remove the file name error message.
-    // The value of this field does not determine anything.
+    // Hide search form
+    $_['lot']['bar']['lot'][0]['lot']['search']['hidden'] = true;
+    // This field was added to remove the file name error message
+    // The value of this field does not determine anything
     $_['lot']['desk']['lot']['form']['lot']['fields']['lot']['name'] = [
         'name' => 'file[name]',
         'type' => 'hidden',
         'value' => 'state.php'
     ];
-    // This field determine the original extension state location.
+    // This field determine the original extension state location
     $_['lot']['desk']['lot']['form']['lot']['fields']['lot']['path'] = [
         'name' => 'path',
         'type' => 'hidden',
