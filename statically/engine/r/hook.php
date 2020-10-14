@@ -16,7 +16,7 @@ function content($content) {
             return 'https://cdn.statically.io/' . $key . '/' . \substr($path, 2) . $q;
         }
         if (0 === \strpos($path, '/')) {
-            return 'https://cdn.statically.io/' . $key . '/' . \explode('://', $url . $path, 2)[1] . $q;
+            return 'https://cdn.statically.io/' . $key . $path . $q;
         }
         return 'https://cdn.statically.io/' . $key . '/' . \explode('://', $path, 2)[1] . $q;
     };
