@@ -2,15 +2,19 @@
 
 function statically($_) {
     extract($GLOBALS, \EXTR_SKIP);
+    // Get request only
     if ('g' !== $_['task']) {
-        // Reject!
         $_['kick'] = \strtr($url->current, ['/::' . $_['task'] . '::/' => '/::g::/']);
         return $_;
-
+    }
+    // Page offset is not allowed in the URL
+    if (isset($_['i'])) {
+        $_['kick'] = $url->clean;
+        return $_;
     }
     $_['layout'] = 'state';
     // Hide search form
-    $_['lot']['bar']['lot'][0]['lot']['search']['hidden'] = true;
+    $_['lot']['bar']['lot'][0]['lot']['search']['skip'] = true;
     // This field was added to remove the file name error message
     // The value of this field does not determine anything
     $_['lot']['desk']['lot']['form']['lot']['fields']['lot']['name'] = [
@@ -24,9 +28,9 @@ function statically($_) {
         'type' => 'hidden',
         'value' => 'x/statically/state.php'
     ];
-    // $_['lot']['desk']['lot']['form']['lot'][1]['title'] = \S . 'Statically' . \S;
-    // $_['lot']['desk']['lot']['form']['lot'][1]['description'] = 'The all-in-one solution for open source static asset delivery.';
-    $_['lot']['desk']['lot']['form']['lot'][0]['content'] = '<h2><img alt="Statically" src="' . $url . '/lot/x/statically/lot/asset/svg/statically.svg"></h2><p class="description">' . \i('The all-in-one solution for open source static asset delivery.') . '</p>';
+    $_['lot']['desk']['lot']['form']['lot'][1]['title'] = \S . 'Statically' . \S;
+    $_['lot']['desk']['lot']['form']['lot'][1]['description'] = 'The all-in-one solution for open source static asset delivery.';
+    // $_['lot']['desk']['lot']['form']['lot'][0]['content'] = '<h2><img alt="Statically" src="' . $url . '/lot/x/statically/lot/asset/svg/statically.svg"></h2><p class="description">' . \i('The all-in-one solution for open source static asset delivery.') . '</p>';
     // Fix #13 <https://stackoverflow.com/a/53893947/1163000>
     $fresh = function($path) {
         if (\function_exists("\\opcache_invalidate") && \strlen((string) \ini_get('opcache.restrict_api')) < 1) {
