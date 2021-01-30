@@ -7,6 +7,6 @@ return [
         'image' => 1
     ],
     'image' => [
-        'quality'=>60
+        'quality' => 60
     ]
 ];

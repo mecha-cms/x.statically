@@ -51,15 +51,33 @@ function statically($_) {
                                     'value' => 1
                                 ],
                                 'script' => [
-                                    'title' => 'Minify CSS files automatically.',
+                                    'title' => 'Optimize CSS files automatically.',
                                     'value' => 1
                                 ],
                                 'style' => [
-                                    'title' => 'Minify JS files automatically.',
+                                    'title' => 'Optimize JS files automatically.',
                                     'value' => 1
                                 ]
                             ],
                             'stack' => 10
+                        ],
+                        'minify' => [
+                            'title' => 'Minification',
+                            'type' => 'items',
+                            'block' => true,
+                            'name' => 'state[minify]',
+                            'value' => $data['minify'] ?? [],
+                            'lot' => [
+                                'script' => [
+                                    'title' => 'Minify JS files automatically.',
+                                    'value' => 1
+                                ],
+                                'style' => [
+                                    'title' => 'Minify CSS files automatically.',
+                                    'value' => 1
+                                ]
+                            ],
+                            'stack' => 20
                         ],
                         'image' => [
                             'name' => 'state[image][quality]',
@@ -72,7 +90,7 @@ function statically($_) {
                             'max' => 100,
                             'min' => 0,
                             'step' => 1,
-                            'stack' => 20
+                            'stack' => 30
                         ]
                     ],
                     'stack' => 10

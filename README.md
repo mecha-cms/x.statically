@@ -3,11 +3,11 @@ Statically Extension for Mecha
 
 > [Statically](https://statically.io) is a free and public Content Delivery Network (CDN) for static assets.
 
-![Statically](https://user-images.githubusercontent.com/1669261/104103732-493ac780-52d6-11eb-989f-9eb53c927fbe.png)
+![Statically](https://user-images.githubusercontent.com/1669261/106356413-fc289f00-6331-11eb-880b-4127e4160903.png)
 
 Release Notes
 -------------
 
-### master
+### 1.0.0
 
- - Yo!
+ - Initial stable release.
