@@ -13,7 +13,6 @@ function statically($_) {
         return $_;
     }
     $_['title'] = \S . 'Statically' . \S;
-    $_['type'] = 'state';
     // Hide search form
     $_['lot']['bar']['lot'][0]['lot']['search']['skip'] = true;
     // This field was added to remove the file name error message

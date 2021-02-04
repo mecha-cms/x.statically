@@ -4,7 +4,7 @@ description: Statically is a free and public Content Delivery Network (CDN) for 
 type: Markdown
 link: https://statically.io
 author: Taufik Nurrohman
-version: 1.0.0
+version: 1.0.1
 
 use:
   '.\lot\x\panel': 0
