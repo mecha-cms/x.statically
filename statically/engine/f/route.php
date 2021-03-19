@@ -1,10 +1,12 @@
-<?php namespace _\lot\x\panel\route\__state;
+<?php namespace x\panel\route\__state;
 
 function statically($_) {
     extract($GLOBALS, \EXTR_SKIP);
-    // Get request only
+    // Get task only
     if ('g' !== $_['task']) {
-        $_['kick'] = \strtr($url->current, ['/::' . $_['task'] . '::/' => '/::g::/']);
+        $_['kick'] = \strtr($url->current, [
+            '/::' . $_['task'] . '::/' => '/::g::/'
+        ]);
         return $_;
     }
     // Page offset is not allowed in the URL
@@ -30,7 +32,6 @@ function statically($_) {
     ];
     $_['lot']['desk']['lot']['form']['lot'][1]['title'] = \S . 'Statically' . \S;
     $_['lot']['desk']['lot']['form']['lot'][1]['description'] = 'The all-in-one solution for open source static asset delivery.';
-    // $_['lot']['desk']['lot']['form']['lot'][0]['content'] = '<h2><img alt="Statically" src="' . $url . '/lot/x/statically/lot/asset/svg/statically.svg"></h2><p class="description">' . \i('The all-in-one solution for open source static asset delivery.') . '</p>';
     $data = require __DIR__ . \DS . '..' . \DS . '..' . \DS . 'state.php';
     $_['lot']['desk']['lot']['form']['lot'][1]['lot']['tabs']['lot'] = [
         'free' => [
@@ -81,9 +82,9 @@ function statically($_) {
                         'image' => [
                             'name' => 'state[image][quality]',
                             'value' => $data['image']['quality'] ?? null,
+                            'value-suffix' => '%',
                             'title' => 'Image Quality',
                             'description' => 'Set the compression rate for all images. Enter <code>0</code> or leave empty to disable.',
-                            'after' => '%',
                             'hint' => 0,
                             'type' => 'number',
                             'max' => 100,

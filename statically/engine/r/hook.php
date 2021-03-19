@@ -1,4 +1,4 @@
-<?php namespace _\lot\x\statically;
+<?php namespace x\statically;
 
 function content($content) {
     // Ignore local site
