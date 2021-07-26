@@ -19,17 +19,9 @@ function statically($_) {
     $_['lot']['bar']['lot'][0]['lot']['search']['skip'] = true;
     // This field was added to remove the file name error message
     // The value of this field does not determine anything
-    $_['lot']['desk']['lot']['form']['lot']['fields']['lot']['name'] = [
-        'name' => 'file[name]',
-        'type' => 'hidden',
-        'value' => 'state.php'
-    ];
+    $_['lot']['desk']['lot']['form']['data']['file[name]'] = 'state.php';
     // This field determine the original extension state location
-    $_['lot']['desk']['lot']['form']['lot']['fields']['lot']['path'] = [
-        'name' => 'path',
-        'type' => 'hidden',
-        'value' => 'x/statically/state.php'
-    ];
+    $_['lot']['desk']['lot']['form']['data']['path'] = 'x/statically/state.php';
     $_['lot']['desk']['lot']['form']['lot'][1]['title'] = \S . 'Statically' . \S;
     $_['lot']['desk']['lot']['form']['lot'][1]['description'] = 'The all-in-one solution for open source static asset delivery.';
     $data = require __DIR__ . \DS . '..' . \DS . '..' . \DS . 'state.php';
@@ -82,7 +74,7 @@ function statically($_) {
                         'image' => [
                             'name' => 'state[image][quality]',
                             'value' => $data['image']['quality'] ?? null,
-                            'value-suffix' => '%',
+                            'value-after' => '%',
                             'title' => 'Image Quality',
                             'description' => 'Set the compression rate for all images. Enter <code>0</code> or leave empty to disable.',
                             'hint' => 0,

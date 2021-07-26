@@ -6,7 +6,7 @@ return [
         'style' => 1,
         'image' => 1
     ],
-    'image' => [
+    'image'=> [
         'quality' => 60
     ]
 ];
