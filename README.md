@@ -1,5 +1,5 @@
-Statically Extension for Mecha
-==============================
+Statically Extension for [Mecha](https://github.com/mecha-cms/mecha)
+====================================================================
 
 > [Statically](https://statically.io) is a free and public Content Delivery Network (CDN) for static assets.
 
