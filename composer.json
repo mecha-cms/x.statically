@@ -1,0 +1,5 @@
+{
+  "description": "Free and public Content Delivery Network (CDN) for static assets.",
+  "license": "GPL-3.0-or-later",
+  "name": "mecha-cms/x.statically"
+}
