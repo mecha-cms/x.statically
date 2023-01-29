@@ -8,6 +8,7 @@ return [
         'style' => 1
     ],
     'image' => [
+        'format' => 'auto',
         'quality' => 60
     ]
 ];

@@ -39,9 +39,10 @@ function content($content) {
             if (false === \strpos(',gif,jpeg,jpg,png,svg,', ',' . \pathinfo($path, \PATHINFO_EXTENSION) . ',')) {
                 return $m[0];
             }
+            $f = ($state->x->statically->image->format ?? false);
             $q = (int) ($state->x->statically->image->quality ?? 0);
             [$query, $hash] = \array_replace(["", ""], \explode('#', $query, 2));
-            $query = \To::query(\array_replace_recursive((array) \From::query($query), ['f' => 'auto', 'q' => $q]));
+            $query = \To::query(\array_replace_recursive((array) \From::query($query), ['f' => false === $f ? null : $f, 'q' => $q]));
             $img['src'] = $resolve($src, 'img', $query . ("" !== $hash ? '#' . $hash : ""));
             return (string) $img;
         }, $content);
