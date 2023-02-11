@@ -15,6 +15,7 @@ $_['lot']['bar']['lot'][1]['lot']['statically'] = [
 ];
 
 if ('x/statically/state.php' === $_['path'] && !array_key_exists('type', $_GET) && !isset($_['type'])) {
+    $_['lot']['bar']['lot'][0]['lot']['search']['skip'] = true; // Hide search form
     $_['type'] = 'state';
     if (isset($_['lot']['desk']['lot']['form']['lot'][1]['lot']['tabs']['lot'])) {
         $data = require __DIR__ . D . '..' . D . 'state.php';
@@ -99,7 +100,7 @@ if ('x/statically/state.php' === $_['path'] && !array_key_exists('type', $_GET) 
                             'stack' => 40,
                             'title' => 'WebP',
                             'type' => 'item',
-                            'value' => s($data['image']['format'] ?? null)
+                            'value' => $data['image']['format'] ?? null
                         ]
                     ],
                     'stack' => 10
