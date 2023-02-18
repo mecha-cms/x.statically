@@ -1,7 +1,7 @@
 <?php namespace x\statically;
 
 function content($content) {
-    // Ignore offline site
+    // Ignore off-line site
     if (!$content || \in_array(\ip(), ['127.0.0.1', '::1'])) {
         return $content;
     }
@@ -23,7 +23,7 @@ function content($content) {
         return $prefix . '/' . \explode('://', $path, 2)[1] . $query;
     };
     if (false !== \strpos($content, '<img ') && !empty($state->x->statically->service->picture)) {
-        $content = \preg_replace_callback('/<img(\s[^>]*)?>/', function ($m) use ($resolve, $state) {
+        $content = \preg_replace_callback('/<img(\s[^>]*)?>/', static function ($m) use ($resolve, $state) {
             // Skip image(s) without `src` attribute
             if (false === \strpos($m[1], 'src=')) {
                 return $m[0];
@@ -34,7 +34,7 @@ function content($content) {
                 return $m[0];
             }
             // Remove query string URL
-            [$path, $query] = \explode('?', $src, 2);
+            [$path, $query] = \array_replace(["", ""], \explode('?', $src, 2));
             // Skip unsupported image file type
             if (false === \strpos(',gif,jpeg,jpg,png,svg,', ',' . \pathinfo($path, \PATHINFO_EXTENSION) . ',')) {
                 return $m[0];
@@ -58,12 +58,12 @@ function content($content) {
             if (!$src = $script['src']) {
                 return $m[0];
             }
-            [$path, $query] = \explode('?', $src, 2);
+            [$path, $query] = \array_replace(["", ""], \explode('?', $src, 2));
             // Make sure it ends with `.js`
-            if ('.js' !== \substr($src, -3)) {
+            if ('.js' !== \substr($path, -3)) {
                 return $m[0];
             }
-            if ('.min.js' !== \substr($src, -7) && !empty($state->x->statically->minify->script)) {
+            if ('.min.js' !== \substr($path, -7) && !empty($state->x->statically->minify->script)) {
                 $path = \strtr(\dirname($path) . '/' . \basename($path, '.js') . '.min.js', [\D => '/']);
             }
             $script['src'] = $resolve($src, 'js', $query);
@@ -85,7 +85,7 @@ function content($content) {
             if (!$href = $link['href']) {
                 return $m[0];
             }
-            [$path, $query] = \explode('?', $href, 2);
+            [$path, $query] = \array_replace(["", ""], \explode('?', $href, 2));
             // Make sure it ends with `.css`
             if ('.css' !== \substr($path, -4)) {
                 return $m[0];
