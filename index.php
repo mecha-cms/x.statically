@@ -22,7 +22,7 @@ function content($content) {
         }
         return $prefix . '/' . \explode('://', $path, 2)[1] . $query;
     };
-    if (false !== \strpos($content, '<img ') && !empty($state->x->statically->service->image)) {
+    if (false !== \strpos($content, '<img ') && !empty($state->x->statically->service->picture)) {
         $content = \preg_replace_callback('/<img(\s[^>]*)?>/', function ($m) use ($resolve, $state) {
             // Skip image(s) without `src` attribute
             if (false === \strpos($m[1], 'src=')) {
@@ -39,8 +39,8 @@ function content($content) {
             if (false === \strpos(',gif,jpeg,jpg,png,svg,', ',' . \pathinfo($path, \PATHINFO_EXTENSION) . ',')) {
                 return $m[0];
             }
-            $f = ($state->x->statically->image->format ?? false);
-            $q = (int) ($state->x->statically->image->quality ?? 0);
+            $f = ($state->x->statically->picture->format ?? false);
+            $q = (int) ($state->x->statically->picture->quality ?? 0);
             [$query, $hash] = \array_replace(["", ""], \explode('#', $query, 2));
             $query = \To::query(\array_replace_recursive((array) \From::query($query), ['f' => false === $f ? null : $f, 'q' => $q]));
             $img['src'] = $resolve($src, 'img', $query . ("" !== $hash ? '#' . $hash : ""));

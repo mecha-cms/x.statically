@@ -37,7 +37,7 @@ if ('x/statically/state.php' === $_['path'] && !array_key_exists('type', $_GET) 
                         'service' => [
                             'flex' => false,
                             'lot' => [
-                                'image' => [
+                                'picture' => [
                                     'title' => 'Optimize image files automatically.',
                                     'value' => 1
                                 ],
@@ -74,33 +74,33 @@ if ('x/statically/state.php' === $_['path'] && !array_key_exists('type', $_GET) 
                             'type' => 'items',
                             'values' => $data['minify'] ?? []
                         ],
-                        'image-quality' => [
-                            'active' => !empty($data['service']['image']),
+                        'picture-quality' => [
+                            'active' => !empty($data['service']['picture']),
                             'description' => 'Set the compression rate for all images. Enter <code>0</code> or leave empty to disable.',
                             'hint' => 0,
                             'max' => 100,
                             'min' => 0,
-                            'name' => 'state[image][quality]',
+                            'name' => 'state[picture][quality]',
                             'stack' => 30,
                             'step' => 1,
                             'title' => 'Image Quality',
                             'type' => 'number',
                             'unit' => '%',
-                            'value' => $data['image']['quality'] ?? null
+                            'value' => $data['picture']['quality'] ?? null
                         ],
-                        'image-format' => [
-                            'active' => !empty($data['service']['image']),
+                        'picture-format' => [
+                            'active' => !empty($data['service']['picture']),
                             'description' => ['Convert images to %s on the fly?', '<a href="https://en.wikipedia.org/wiki/WebP" rel="nofollow" target="_blank">WebP</a>'],
                             'lot' => [
                                 'auto' => 'Automatic',
                                 'false' => 'No',
                                 'webp' => 'Yes (Force)'
                             ],
-                            'name' => 'state[image][format]',
+                            'name' => 'state[picture][format]',
                             'stack' => 40,
                             'title' => 'WebP',
                             'type' => 'item',
-                            'value' => $data['image']['format'] ?? null
+                            'value' => $data['picture']['format'] ?? null
                         ]
                     ],
                     'stack' => 10

@@ -2,13 +2,13 @@
 
 return [
     'base' => 'https://cdn.statically.io',
-    'service' => [
-        'image' => 1,
-        'script' => 1,
-        'style' => 1
-    ],
-    'image' => [
+    'picture' => [
         'format' => 'auto',
         'quality' => 60
+    ],
+    'service' => [
+        'picture' => 1,
+        'script' => 1,
+        'style' => 1
     ]
 ];
