@@ -8,9 +8,6 @@ author: Taufik Nurrohman
 image: /lot/x/statically/index.png
 type: Markdown
 version: 1.2.0
-
-use:
-  '.\lot\x\panel': 0
 ...
 
 Our mission is to make static files easy to manage and fast to deliver. We help files distribution faster, smaller,
